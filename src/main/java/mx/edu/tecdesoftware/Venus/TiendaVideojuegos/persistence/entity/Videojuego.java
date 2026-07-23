@@ -14,7 +14,7 @@ public class Videojuego {
     @Column(name = "titulo")
     private String titulo;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
     private Double precio;
 
     // Relación de vuelta hacia Consola
