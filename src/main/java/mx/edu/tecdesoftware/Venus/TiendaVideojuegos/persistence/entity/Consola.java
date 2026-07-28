@@ -20,7 +20,6 @@ public class Consola {
     @Column(name = "marca")
     private String marca;
 
-    // Relación Maestro-Detalle con persistencia en cascada
     @OneToMany(mappedBy = "consola", cascade = ALL)
     private List<Videojuego> videojuegos;
 

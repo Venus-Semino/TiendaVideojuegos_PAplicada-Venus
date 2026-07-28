@@ -17,7 +17,6 @@ public class Videojuego {
     @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
     private Double precio;
 
-    // Relación de vuelta hacia Consola
     @ManyToOne
     @JoinColumn(name = "consola_id", nullable = false)
     private Consola consola;

@@ -1,6 +1,6 @@
 package mx.edu.tecdesoftware.Venus.TiendaVideojuegos.persistence.mapper;
 
-import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.service.Purchase;
+import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.Purchase;
 import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.persistence.entity.Compra;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

@@ -1,12 +1,14 @@
 package mx.edu.tecdesoftware.Venus.TiendaVideojuegos.persistence.mapper;
 
-import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.service.Console;
+import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.Console;
 import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.persistence.entity.Consola;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring") // Inyección en Spring
+import java.util.List;
+
+@Mapper(componentModel = "spring")
 public interface ConsoleMapper {
 
     // Entidad a Dominio
@@ -17,6 +19,8 @@ public interface ConsoleMapper {
 
     // Dominio a Entidad
     @InheritInverseConfiguration
-    @Mapping(target = "videojuegos", ignore = true) // Ignoramos la lista porque no está en el dominio
+    @Mapping(target = "videojuegos", ignore = true)
     Consola toEntity(Console console);
+
+    List<Console> toConsoles(List<Consola> consolas);
 }

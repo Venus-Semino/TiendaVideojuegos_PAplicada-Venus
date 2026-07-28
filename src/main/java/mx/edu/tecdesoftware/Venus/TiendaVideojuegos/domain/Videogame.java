@@ -1,4 +1,4 @@
-package mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.service;
+package mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain;
 
 public class Videogame {
     private Integer gameId;

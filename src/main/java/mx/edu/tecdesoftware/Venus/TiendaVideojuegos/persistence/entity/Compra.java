@@ -21,7 +21,6 @@ public class Compra {
     @Column(name = "medio_pago")
     private String mediopago;
 
-    // Relación necesaria para el Mapper y para la base de datos
     @ManyToOne
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
