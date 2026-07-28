@@ -1,7 +1,7 @@
-package mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.service;
+package mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain;
 
 public class Client {
-    private Integer id; // Uso estricto de Integer
+    private Integer id;
     private String firstName;
     private String lastName;
     private String phone;

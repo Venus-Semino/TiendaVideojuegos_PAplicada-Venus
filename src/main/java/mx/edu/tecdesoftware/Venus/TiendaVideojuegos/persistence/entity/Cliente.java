@@ -17,9 +17,8 @@ public class Cliente {
     private String direccion;
 
     @Column(name = "correo_electronico")
-    private String correoElectronico; // Minúscula al inicio para seguir convención
+    private String correoElectronico;
 
-    // Un cliente tiene muchas compras
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Compra> compras;
 

@@ -1,15 +1,17 @@
 package mx.edu.tecdesoftware.Venus.TiendaVideojuegos.persistence.mapper;
 
-import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.service.Client;
+import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.Client;
 import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.persistence.entity.Cliente;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring") // Inyección en el contexto de Spring
+import java.util.List;
+
+@Mapper(componentModel = "spring")
 public interface ClientMapper {
 
-    // Convirtiendo de Entidad a Dominio
+    // Entidad a Dominio
     @Mapping(source = "nombre", target = "firstName")
     @Mapping(source = "apellidos", target = "lastName")
     @Mapping(source = "celular", target = "phone")
@@ -17,8 +19,9 @@ public interface ClientMapper {
     @Mapping(source = "correoElectronico", target = "email")
     Client toClient(Cliente cliente);
 
-    // Convirtiendo de Dominio a Entidad bidireccionalmente
+    // Dominio a Entidad bidireccionalmente
     @InheritInverseConfiguration
-    @Mapping(target = "compras", ignore = true) // Ignoramos la lista porque no está en el POJO
+    @Mapping(target = "compras", ignore = true)
     Cliente toEntity(Client client);
+    List<Client> toClients(List<Cliente> clientes);
 }
