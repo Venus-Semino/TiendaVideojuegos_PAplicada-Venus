@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.Console;
 import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.service.ConsoleService;
@@ -18,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/consoles")
 @Tag(name="Console", description = "Manage consoles in the store")
+@SecurityRequirement(name = "bearerAuth")
+
 public class ConsoleController {
 
     // Solo inyectamos el Service, manteniendo la arquitectura limpia

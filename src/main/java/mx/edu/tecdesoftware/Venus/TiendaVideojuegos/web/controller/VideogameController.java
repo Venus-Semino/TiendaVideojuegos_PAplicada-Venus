@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.Videogame;
 import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.service.VideogameService;
@@ -18,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/videogames")
 @Tag(name="Videogame", description = "Manage videogames in the store")
+@SecurityRequirement(name = "bearerAuth")
+
 public class VideogameController {
 
     @Autowired
