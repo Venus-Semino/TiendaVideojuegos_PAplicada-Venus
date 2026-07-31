@@ -7,15 +7,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import mx.edu.tecdesoftware.Venus.TiendaVideojuegos.domain.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -29,35 +26,85 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
 
-        final String authHeader = request.getHeader("Authorization");
-        String email = null;
+        System.out.println("\n========== NUEVA PETICIÓN ==========");
+
+        String authHeader = request.getHeader("Authorization");
+        System.out.println("Authorization Header: " + authHeader);
+
         String jwt = null;
+        String email = null;
 
-        // Verificar el encabezado Authorization y remover "Bearer "
+        // Verificar si existe el encabezado Authorization
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
+
             jwt = authHeader.substring(7);
+            System.out.println("Token recibido: " + jwt);
+
             try {
                 email = jwtUtil.extractEmail(jwt);
-            } catch (Exception ignored) {
-                // Si el token es inválido, no se extrae el correo
+                System.out.println("Email extraído: " + email);
+            } catch (Exception e) {
+                System.out.println("ERROR al extraer el email:");
+                e.printStackTrace();
             }
+        } else {
+            System.out.println("No se recibió un token Bearer.");
         }
 
-        // Si hay correo en el token y el usuario aún no está autenticado en el contexto
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        // Si existe email y aún no hay autenticación
+        if (email != null &&
+                SecurityContextHolder.getContext().getAuthentication() == null) {
+
             var clientOptional = clientService.getByEmail(email);
 
-            if (clientOptional.isPresent() && jwtUtil.validateToken(jwt, email)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        clientOptional.get(), null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+            System.out.println("Usuario encontrado en BD: " + clientOptional.isPresent());
 
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+            if (clientOptional.isPresent()) {
+
+                boolean valido = jwtUtil.validateToken(jwt, email);
+                System.out.println("¿Token válido?: " + valido);
+
+                if (valido) {
+
+                    CustomUserDetails userDetails =
+                            new CustomUserDetails(clientOptional.get());
+
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+
+                    authToken.setDetails(
+                            new WebAuthenticationDetailsSource()
+                                    .buildDetails(request)
+                    );
+
+                    SecurityContextHolder.getContext()
+                            .setAuthentication(authToken);
+
+                    System.out.println("Autenticación registrada correctamente.");
+                    System.out.println("Authentication: "
+                            + SecurityContextHolder.getContext().getAuthentication());
+                }
+
+            } else {
+
+                System.out.println("El usuario NO existe en la base de datos.");
+
             }
+
+        } else {
+
+            System.out.println("No se pudo autenticar porque el email es null o ya había autenticación.");
+
         }
 
+        System.out.println("========== FIN FILTRO ==========\n");
 
         filterChain.doFilter(request, response);
     }
