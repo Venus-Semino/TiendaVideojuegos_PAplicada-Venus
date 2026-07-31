@@ -19,6 +19,9 @@ public class Cliente {
     @Column(name = "correo_electronico")
     private String correoElectronico;
 
+    @Column(name = "contrasena")
+    private String contrasena;
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Compra> compras;
 
@@ -50,4 +53,8 @@ public class Cliente {
     public List<Compra> getCompras() { return compras; }
 
     public void setCompras(List<Compra> compras) { this.compras = compras; }
+
+    public String getContrasena() { return contrasena; }
+
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 }

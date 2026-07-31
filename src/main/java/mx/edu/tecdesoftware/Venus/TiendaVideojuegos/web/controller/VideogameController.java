@@ -75,6 +75,7 @@ public class VideogameController {
                     )
             )
     )
+    
     @ApiResponse(responseCode = "201", description = "Videogame created successfully")
     @ApiResponse(responseCode = "400", description = "Invalid videogame data")
     @ApiResponse(responseCode = "500", description = "Internal server error")

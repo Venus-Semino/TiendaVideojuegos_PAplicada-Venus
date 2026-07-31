@@ -17,6 +17,7 @@ public interface ClientMapper {
     @Mapping(source = "celular", target = "phone")
     @Mapping(source = "direccion", target = "address")
     @Mapping(source = "correoElectronico", target = "email")
+    @Mapping(source = "contrasena", target = "password")
     Client toClient(Cliente cliente);
 
     // Dominio a Entidad bidireccionalmente

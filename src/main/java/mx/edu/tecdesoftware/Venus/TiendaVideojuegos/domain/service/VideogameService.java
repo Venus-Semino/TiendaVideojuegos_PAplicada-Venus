@@ -27,9 +27,11 @@ public class VideogameService {
     }
 
     public Videogame save(Videogame videogame) {
+        if (getByTitle(videogame.getTitle()).isPresent()) {
+            return null;
+        }
         return videogameRepository.save(videogame);
     }
-
     public boolean delete(Integer id) {
         return getById(id).map(videogame -> {
             videogameRepository.delete(id);

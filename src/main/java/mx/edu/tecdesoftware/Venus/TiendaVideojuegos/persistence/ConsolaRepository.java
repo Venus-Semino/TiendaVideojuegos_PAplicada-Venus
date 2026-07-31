@@ -42,6 +42,10 @@ public class ConsolaRepository implements ConsoleRepository {
         Consola consola = mapper.toEntity(console);
         return mapper.toConsole(consolaCrudRepository.save(consola));
     }
+    @Override
+    public Optional<Console> getByName(String name) {
+        return consolaCrudRepository.findByNombre(name).map(consola -> mapper.toConsole(consola));
+    }
 
     @Override
     public void delete(Integer consoleId) {

@@ -24,7 +24,14 @@ public class ConsoleService {
         return consoleRepository.getByBrand(brand);
     }
 
+    public Optional<Console> getByName(String name) {
+        return consoleRepository.getByName(name);
+    }
+
     public Console save(Console console) {
+        if (getByName(console.getName()).isPresent()) {
+            return null;
+        }
         return consoleRepository.save(console);
     }
 

@@ -9,5 +9,6 @@ public interface ConsoleRepository {
     Optional<List<Console>> getByBrand(String brand);
     Optional<Console> getConsole(Integer consoleId);
     Console save(Console console);
+    Optional<Console> getByName(String name);
     void delete(Integer consoleId);
 }
