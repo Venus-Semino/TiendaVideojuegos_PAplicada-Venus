@@ -20,8 +20,14 @@ public class ClientService {
 
     public Optional<Client> getByEmail(String email) { return clientRepository.getByEmail(email); }
 
-    public Client save(Client client) { return clientRepository.save(client); }
+    public Client save(Client client) {
+        Optional<Client> existingClient = clientRepository.getByEmail(client.getEmail());
 
+        if (existingClient.isPresent()) {
+            throw new IllegalArgumentException("El correo electrónico '" + client.getEmail() + "' ya está registrado.");
+        }
+        return clientRepository.save(client);
+    }
     public boolean delete(Integer clientId) {
         return getClient(clientId).map(client -> {
             clientRepository.delete(clientId);
